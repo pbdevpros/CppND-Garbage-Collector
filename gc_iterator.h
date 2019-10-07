@@ -4,9 +4,10 @@
 //
 class OutOfRangeExc
 {
-    // Add functionality if needed by your application.
+    // int throwvalue_ = 255;
+    // OutOfRangeExc();
+    // void Throw();
 };
-
 
 // An iterator-like class for cycling through arrays
 // that are pointed to by GCPtrs. Iter pointers
@@ -38,54 +39,44 @@ class Iter
         begin = first;
         length = last - first;
     }
-    // Return length of sequence to which this
-    // Iter points.
+    // Return length of sequence to which this Iter points.
     unsigned size() { return length; }
-    // Return value pointed to by ptr.
-    // Do not allow out-of-bounds access.
     T &operator*()
     {
         if ((ptr >= end) || (ptr < begin))
             throw OutOfRangeExc();
         return *ptr;
     }
-    // Return address contained in ptr.
-    // Do not allow out-of-bounds access.
+
     T *operator->()
     {
         if ((ptr >= end) || (ptr < begin))
             throw OutOfRangeExc();
         return ptr;
     }
-    // Prefix ++.
     Iter operator++()
     {
         ptr++;
         return *this;
     }
-    // Prefix --.
     Iter operator--()
     {
         ptr--;
         return *this;
     }
-    // Postfix ++.
     Iter operator++(int notused)
     {
         T *tmp = ptr;
         ptr++;
         return Iter<T>(tmp, begin, end);
     }
-    // Postfix --.
     Iter operator--(int notused)
     {
         T *tmp = ptr;
         ptr--;
         return Iter<T>(tmp, begin, end);
     }
-    // Return a reference to the object at the
-    // specified index. Do not allow out-of-bounds
-    // access.
+
     T &operator[](int i)
     {
         if ((i < 0) || (i >= (end - begin)))
