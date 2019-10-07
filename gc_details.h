@@ -1,33 +1,34 @@
 // This class defines an element that is stored
 // in the garbage collection information list.
 //
-template <class T>
-class PtrDetails
-{
-  public:
-    unsigned refcount; // current reference count
-    T *memPtr;         // pointer to allocated memory
-    /* isArray is true if memPtr points
-to an allocated array. It is false
-otherwise. */
-    bool isArray; // true if pointing to array
-    /* If memPtr is pointing to an allocated
-array, then arraySize contains its size */
-    unsigned arraySize; // size of array
-    // Here, mPtr points to the allocated memory.
-    // If this is an array, then size specifies
-    // the size of the array.
+/// @file PrtDetails.cpp
 
-    PtrDetails(void)
-    {
-        // TODO: Implement PtrDetails
-    }
+template<class T>
+class PtrDetails {
+  public:
+    PtrDetails(T* member, int size = 1 ) ; // https://en.cppreference.com/w/cpp/language/default_arguments - argument can only be a constant or static member variable
+    T refCount_;
+    T *memPtr_;
+    bool isArray_;
+    int arraySize_;
 };
-// Overloading operator== allows two class objects to be compared.
-// This is needed by the STL list class.
-template <class T>
-bool operator==(const PtrDetails<T> &ob1,
-                const PtrDetails<T> &ob2)
+
+template<class T>
+PtrDetails<T>::PtrDetails(T* member, int size)
 {
-    // TODO: Implement operator==
+    /**
+     * https://stackoverflow.com/questions/33523585/how-do-sizeofarr-sizeofarr0-work
+     */
+    int len =  sizeof(member) / sizeof(T) ;
+    if ( len > 1 ) {
+        isArray_ = true;
+    }
+}
+
+// not a member function...
+template <class T>
+bool operator==(const PtrDetails<T> &obj_1,
+                const PtrDetails<T> &obj_2)
+{
+    return obj_1.refCount_ == obj_2.refCount_;
 }
